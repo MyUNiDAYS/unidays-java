@@ -1,0 +1,16 @@
+group 'com.myunidays'
+version '1.1-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+}
