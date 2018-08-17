@@ -7,15 +7,12 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 final class TrackingUriBuilder {
-    private static final Pattern percentEncodingPattern = Pattern.compile("(%[A-Z0-9]{2})");
     private static final DecimalFormat moneyFormatter = new DecimalFormat("#0.00");
 
     private StringBuilder builder;
@@ -25,25 +22,11 @@ final class TrackingUriBuilder {
     }
 
     private static String encode(String s) {
-        String encoded;
         try {
-            encoded = URLEncoder.encode(s, "UTF-8");
+           return URLEncoder.encode(s, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-
-        Matcher matcher = percentEncodingPattern.matcher(encoded);
-        StringBuilder sb = new StringBuilder();
-        int last = 0;
-
-        while (matcher.find()) {
-            sb.append(encoded, last, matcher.start());
-            sb.append(matcher.group(0).toLowerCase());
-            last = matcher.end();
-        }
-        sb.append(encoded.substring(last));
-
-        return sb.toString();
     }
 
     @Override
@@ -57,30 +40,58 @@ final class TrackingUriBuilder {
     }
 
     TrackingUriBuilder appendTrackingParameters(DirectTrackingDetails directTrackingDetails) {
-        builder.append("?CustomerId=")
+        builder.append("?PartnerId=")
                 .append(encode(directTrackingDetails.getPartnerId()))
                 .append("&TransactionId=")
-                .append(encode(directTrackingDetails.getTransactionId()))
-                .append("&Currency=")
-                .append(encode(directTrackingDetails.getCurrency()));
+                .append(encode(directTrackingDetails.getTransactionId()));
 
+        builder.append("&MemberId=");
         if (directTrackingDetails.getMemberId() != null && !directTrackingDetails.getMemberId().isEmpty())
-            builder.append("&MemberId=").append(encode(directTrackingDetails.getMemberId()));
+            builder.append(encode(directTrackingDetails.getMemberId()));
 
-        if (directTrackingDetails.getCode() != null && !directTrackingDetails.getCode().isEmpty())
-            builder.append("&Code=").append(encode(directTrackingDetails.getCode()));
+        builder.append("&Currency=");
+        if(directTrackingDetails.getCurrency()!= null && !directTrackingDetails.getCurrency().isEmpty())
+            builder.append(encode(directTrackingDetails.getCurrency()));
 
-        appendDecimalParameter("OrderTotal", directTrackingDetails.getOrderTotal());
-        appendDecimalParameter("ItemsUNiDAYSDiscount", directTrackingDetails.getItemsUnidaysDiscount());
-        appendDecimalParameter("ItemsTax", directTrackingDetails.getItemsTax());
-        appendDecimalParameter("ShippingGross", directTrackingDetails.getShippingGross());
-        appendDecimalParameter("ShippingDiscount", directTrackingDetails.getShippingDiscount());
-        appendDecimalParameter("ItemsGross", directTrackingDetails.getItemsGross());
-        appendDecimalParameter("ItemsOtherDiscount", directTrackingDetails.getItemsOtherDiscount());
-        appendDecimalParameter("UNiDAYSDiscountPercentage", directTrackingDetails.getUnidaysDiscountPercentage());
+        builder.append("&OrderTotal=");
+        if (directTrackingDetails.getOrderTotal() != null)
+            appendDecimal(directTrackingDetails.getOrderTotal());
 
-        if (directTrackingDetails.getNewCustomer() != null)
-            builder.append("&NewCustomer=").append(directTrackingDetails.getNewCustomer());
+        builder.append("&ItemsUNiDAYSDiscount=");
+        if (directTrackingDetails.getItemsUnidaysDiscount() != null)
+            appendDecimal(directTrackingDetails.getItemsUnidaysDiscount());
+
+        builder.append("&Code=");
+        if (directTrackingDetails.getCode() != null)
+            builder.append(encode(directTrackingDetails.getCode()));
+
+        builder.append("&ItemsTax=");
+        if (directTrackingDetails.getItemsTax() != null)
+            appendDecimal(directTrackingDetails.getItemsTax());
+
+        builder.append("&ShippingGross=");
+        if (directTrackingDetails.getShippingGross() != null)
+            appendDecimal(directTrackingDetails.getShippingGross());
+
+        builder.append("&ShippingDiscount=");
+        if (directTrackingDetails.getShippingDiscount() != null)
+            appendDecimal(directTrackingDetails.getShippingDiscount());
+
+        builder.append("&ItemsGross=");
+        if (directTrackingDetails.getItemsGross() != null)
+            appendDecimal(directTrackingDetails.getItemsGross());
+
+        builder.append("&ItemsOtherDiscount=");
+        if (directTrackingDetails.getItemsOtherDiscount() != null)
+            appendDecimal(directTrackingDetails.getItemsOtherDiscount());
+
+        builder.append("&UNiDAYSDiscountPercentage=");
+        if (directTrackingDetails.getUnidaysDiscountPercentage() != null)
+            appendDecimal(directTrackingDetails.getUnidaysDiscountPercentage());
+
+        builder.append("&NewCustomer=");
+        if (directTrackingDetails.getNewCustomer() != null && directTrackingDetails.getNewCustomer())
+           builder.append("True");
 
         return this;
     }
@@ -94,7 +105,7 @@ final class TrackingUriBuilder {
             SecretKeySpec secret_key = new SecretKeySpec(Base64.decodeBase64(key), "HmacSHA512");
             mac.init(secret_key);
 
-            byte[] buffer = builder.toString().getBytes(Charset.forName("ascii"));
+            byte[] buffer = builder.toString().getBytes(StandardCharsets.US_ASCII);
             byte[] signatureBytes = mac.doFinal(buffer);
 
             builder.append("&Signature=");
@@ -106,16 +117,14 @@ final class TrackingUriBuilder {
         return this;
     }
 
-    TrackingUriBuilder appendTestParameter(boolean isTestUri) {
-        if (isTestUri)
-            builder.append("&Test=true");
-        return this;
+    private void appendDecimal(BigDecimal decimal) {
+        if (decimal == null) return;
+        builder.append(encode(moneyFormatter.format(decimal)));
     }
 
-    private void appendDecimalParameter(String parameterName, BigDecimal decimal) {
-        if (decimal == null) return;
-
-        builder.append(String.format("&%s=", parameterName));
-        builder.append(encode(moneyFormatter.format(decimal)));
+    TrackingUriBuilder appendTestParameter(boolean isTestUri) {
+        if (isTestUri)
+            builder.append("&Test=True");
+        return this;
     }
 }

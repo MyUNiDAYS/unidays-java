@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 
 final class UriGenerator {
     private static final String TrackingUrl = "https://api.myunidays.com/tracking/v1.2/redemption";
-    private static final String TrackingGifUrl = TrackingUrl + "/gif";
+    private static final String TrackingJsUrl = TrackingUrl + "/js";
     private final boolean generateTestUris;
 
     UriGenerator(boolean generateTestUris) {
@@ -17,7 +17,7 @@ final class UriGenerator {
             return new URI(new TrackingUriBuilder()
                     .appendTrackingParameters(directTrackingDetails)
                     .appendTestParameter(generateTestUris)
-                    .prepend(TrackingGifUrl)
+                    .prepend(TrackingJsUrl)
                     .toString());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
@@ -30,7 +30,7 @@ final class UriGenerator {
                     .appendTrackingParameters(directTrackingDetails)
                     .appendSignature(key)
                     .appendTestParameter(generateTestUris)
-                    .prepend(TrackingGifUrl)
+                    .prepend(TrackingJsUrl)
                     .toString());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

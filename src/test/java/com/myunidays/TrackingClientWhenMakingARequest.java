@@ -22,10 +22,11 @@ public class TrackingClientWhenMakingARequest {
     public void before() throws Exception {
         String key = "xCaiGms6eEcRYKqY7hXYPBLizZwY9Z2g/OqyOXa0r7lqZ8Npf78eK+rbnoplH7xCAab/0+h1zLYxfJm62GbgSHfnvjUGEOuh/MtHNALCoXD6Y3YWIrJnlEfym2kmWl7ZQoFyYbZXBTZq0SyCXJAI53ShKIcTPDBM3sNLm70IWns=";
         DirectTrackingDetails directTrackingDetails =
-                new DirectTrackingDetailsBuilder("a customer Id", "GBP", "the transaction id")
+                new DirectTrackingDetailsBuilder("a partner Id", "GBP", "the transaction id")
                         .withOrderTotal(new BigDecimal("209.00"))
                         .withItemsUnidaysDiscount(new BigDecimal("13.00"))
                         .withCode("a code")
+                        .withMemberId("a member id")
                         .withItemsTax(new BigDecimal("34.50"))
                         .withShippingGross(new BigDecimal("5.00"))
                         .withShippingDiscount(new BigDecimal("3.00"))
@@ -35,7 +36,7 @@ public class TrackingClientWhenMakingARequest {
                         .withNewCustomer(true)
                         .build();
 
-        expectedUri = new URI("https://api.myunidays.com/tracking/v1.2/redemption?CustomerId=a+customer+Id&TransactionId=the+transaction+id&Currency=GBP&Code=a+code&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=rwmCpCzZ%2f843lR9K85iz6d0ibeorVKeDqnyxGIxxq6mvj5cnT%2fWP8Bd%2bE%2bx8yLCgCmDHiRv7M76oqDd5%2f9Dv2Q%3d%3d");
+        expectedUri = new URI("https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=a+member+id&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True&Signature=OWgjrpnHU3I6jSjYb7XiuPBq9rhrMc31GUqtKRvLIA6%2FKv1mslm54Xca%2BtXNE3uhaudnOuFm7V6J6704nJQDUA%3D%3D");
 
         httpClient = mock(HttpAsyncClient.class, Mockito.RETURNS_MOCKS);
         TrackingClient client = new TrackingClient(directTrackingDetails, key, httpClient);

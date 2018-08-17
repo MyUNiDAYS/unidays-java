@@ -48,7 +48,7 @@ public class TrackingHelperWhenCreatingAUrlWithAnInvalidKey {
         thrown.expectMessage(this.expectedMessage);
 
         TrackingHelper helper =
-                new TrackingHelper(new DirectTrackingDetailsBuilder("customerid", "GBP", "transactionId").build());
+                new TrackingHelper(new DirectTrackingDetailsBuilder("a partner id", "GBP", "transactionId").build());
 
         uriGenerator.apply(helper, key);
     }

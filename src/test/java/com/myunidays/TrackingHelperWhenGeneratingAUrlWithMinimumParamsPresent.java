@@ -30,12 +30,12 @@ public class TrackingHelperWhenGeneratingAUrlWithMinimumParamsPresent {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(
-                testCase(h -> h.trackingScriptUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption/gif?CustomerId=a+customer+Id&TransactionId=the+transaction&Currency=GBP&Signature=hUFXYt4JLsFxPGKNGeQ%2fbVLgK%2fs9XJO4k7remC8jEbN8oA5pzYppXjNGa%2bF7c6ZI3HIEMHY35xEvPOqFVgW%2fYw%3d%3d"),
-                testCase(h -> h.trackingScriptTestUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption/gif?CustomerId=a+customer+Id&TransactionId=the+transaction&Currency=GBP&Signature=hUFXYt4JLsFxPGKNGeQ%2fbVLgK%2fs9XJO4k7remC8jEbN8oA5pzYppXjNGa%2bF7c6ZI3HIEMHY35xEvPOqFVgW%2fYw%3d%3d&Test=true"),
-                testCase(h -> h.trackingServerUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption?CustomerId=a+customer+Id&TransactionId=the+transaction&Currency=GBP&Signature=hUFXYt4JLsFxPGKNGeQ%2fbVLgK%2fs9XJO4k7remC8jEbN8oA5pzYppXjNGa%2bF7c6ZI3HIEMHY35xEvPOqFVgW%2fYw%3d%3d"),
-                testCase(h -> h.trackingServerTestUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption?CustomerId=a+customer+Id&TransactionId=the+transaction&Currency=GBP&Signature=hUFXYt4JLsFxPGKNGeQ%2fbVLgK%2fs9XJO4k7remC8jEbN8oA5pzYppXjNGa%2bF7c6ZI3HIEMHY35xEvPOqFVgW%2fYw%3d%3d&Test=true"),
-                testCase(TrackingHelper::trackingScriptUrl, "https://api.myunidays.com/tracking/v1.2/redemption/gif?CustomerId=a+customer+Id&TransactionId=the+transaction&Currency=GBP"),
-                testCase(TrackingHelper::trackingScriptTestUrl, "https://api.myunidays.com/tracking/v1.2/redemption/gif?CustomerId=a+customer+Id&TransactionId=the+transaction&Currency=GBP&Test=true")
+                testCase(h -> h.trackingScriptUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer=&Signature=yvBrLWFbtzmtswjTrPev4pA68tvWlANFHBBVN1g4Ei1rZnZnOooI3%2FyFABpN%2FcsgOTAYvzyRDylgC1X4ciIZmg%3D%3D"),
+                testCase(h -> h.trackingScriptTestUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer=&Signature=yvBrLWFbtzmtswjTrPev4pA68tvWlANFHBBVN1g4Ei1rZnZnOooI3%2FyFABpN%2FcsgOTAYvzyRDylgC1X4ciIZmg%3D%3D&Test=True"),
+                testCase(h -> h.trackingServerUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer=&Signature=yvBrLWFbtzmtswjTrPev4pA68tvWlANFHBBVN1g4Ei1rZnZnOooI3%2FyFABpN%2FcsgOTAYvzyRDylgC1X4ciIZmg%3D%3D"),
+                testCase(h -> h.trackingServerTestUrl(key), "https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer=&Signature=yvBrLWFbtzmtswjTrPev4pA68tvWlANFHBBVN1g4Ei1rZnZnOooI3%2FyFABpN%2FcsgOTAYvzyRDylgC1X4ciIZmg%3D%3D&Test=True"),
+                testCase(TrackingHelper::trackingScriptUrl, "https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer="),
+                testCase(TrackingHelper::trackingScriptTestUrl, "https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer=&Test=True")
         );
     }
 
@@ -46,7 +46,7 @@ public class TrackingHelperWhenGeneratingAUrlWithMinimumParamsPresent {
     @Before
     public void before() {
         DirectTrackingDetails directTrackingDetails =
-                new DirectTrackingDetailsBuilder("a customer Id", "GBP", "the transaction").build();
+                new DirectTrackingDetailsBuilder("a partner Id", "GBP", "the transaction id").build();
 
         TrackingHelper trackingHelper = new TrackingHelper(directTrackingDetails);
 

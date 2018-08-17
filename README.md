@@ -262,7 +262,7 @@ The below example sets up some direct tracking details, calls `.send()` on the c
 public class Program {
     public static void main(String... args) {
         // Unidays will provide your region specific partnerId and your signing key
-        String partnerId = "someCustomerId";
+        String partnerId = "somePartnerId";
         String signingKey = "someSigningKey";
 
         DirectTrackingDetails directTrackingDetails =
