@@ -40,7 +40,7 @@ public class TrackingClient implements Closeable {
     }
 
     /**
-     * ends a Server-to-Server Redemption Tracking Request.
+     * Sends a Server-to-Server Redemption Tracking Request.
      * @return HttpResponse of the resulting call.
      */
     public Future<HttpResponse> send() {
@@ -55,6 +55,7 @@ public class TrackingClient implements Closeable {
     public Future<HttpResponse> send(boolean sendTestParameter) {
         URI uri = new UriGenerator(sendTestParameter).generateServerUrl(key, directTrackingDetails);
         HttpGet getRequest = new HttpGet(uri.toString());
+        getRequest.setHeader("User-Agent", "unidays-java-client-library/1.2");
 
         return httpClient.execute(getRequest, null);
     }
