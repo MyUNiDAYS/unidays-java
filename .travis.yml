@@ -17,3 +17,8 @@ deploy:
   on:
     branch: master
     jdk: openjdk8
+notifications:
+  slack:
+    secure: MAreoGSzJjmse0WGsjfPyZTspzREu3OcUUnngs88hL3YJX6nM4Db8y2Nwlj8V0h2qxTHxYHH8n7WJfWFl+FkIa/ctdtGD7pV0m+C+w8RKtEJVmZhIXlMTy2FEv2Y0DrRl7YFPtQiIHwNkrDB60zfP2KgFebeZvIhO67XoxDygWb80taK4S9ci8QYchGQT0NXKP5Ot+fKKC98NDUn5MwaORo6o2xJlxeNlJthHVmHWRH50Wxezfz+1X2BDn8c5t+M6AnPb2k25XZ2MGg99vu/Rkm6jBTkfrhuAKrfJYqnmpQmVuQQr9aqBQq/yZx6lXmGfXTxjnmemHk9USCILjczxv0Wonh64AtL4n+0Z/pXjbjo5GLLHiqCE9fIK7YM0RFzt3n2UEjRDgkykeCDIQui2nx/picFwYiaZW6atgeULmqVldSDKC52Z+Dx4HbaA1w3Ae1jNUAcwS/xVMh2yqvgUwsvaUIJq4TAEkZQgPSdJoo0lLrFdQ3q3GQS8nBQ11P1MzmDku1+Qg43zo9QRo4JrvNOqpbnhMNKxzgR8p+Buyy/rcFpJNnfh/GCj5OgxjAgL+g+n28oaV66WzPrcgkL9JlgOkZIzCBRYZQg+OPNpi2ve5LX2gVRmtwUPHfO1aEsV2BPMKCQI3N4DchXUcdRR4sNEOSVfU6OOHTgzvWRJ9I=
+    on_success: never
+    on_failure: always
